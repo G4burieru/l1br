@@ -35,16 +35,16 @@
   <!-- ********************** ROBOT BASE *********************************  -->
   <link name="base_link">
     <visual>
-      <origin xyz="0 0 3.14" rpy="0 0 3.14"/>
+      <origin xyz="0 0 0" rpy="0 0 3.14"/>
       <geometry>
-        <mesh filename="package://rocket/meshes/EST_estrutura_m3.dae" />
+        <mesh filename="file:////home/gabs/workspace/src/rocket/meshes/EST_estrutura_m3.dae" />
       </geometry>
     </visual>
 
     <collision>
-        <origin rpy="0  0  3.14" xyz="0  0  0.0118" />
+        <origin rpy="0  0  3.14" xyz="0  0  0" />
         <geometry>
-            <mesh filename="package://meshes/EST_estrutura_m3.dae" scale="1 1 1" />
+            <mesh filename="file:////home/gabs/workspace/src/rocket/meshes/EST_estrutura_m3.dae" scale="1 1 1" />
         </geometry>
     </collision>
 
@@ -65,14 +65,14 @@
       <visual name="${prefix}_visual">
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-            <mesh filename="package://rocket/meshes/M_rodatrativa.dae" scale="1 1 1"/>
+            <mesh filename="file:////home/gabs/workspace/src/rocket/meshes/M_rodatrativa.dae" scale="1 1 1"/>
         </geometry>
       </visual>
       
       <collision name="${prefix}_collision">
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="package://meshes/M_rodatrativa.dae" scale="1 1 1"/>
+          <mesh filename="file:////home/gabs/workspace/src/rocket/meshes/M_rodatrativa.dae" scale="1 1 1"/>
         </geometry>
       </collision>
       
@@ -95,7 +95,7 @@
         </joint>
    </xacro:macro>
   
-    <xacro:traction_wheel prefix="left_wheel" pos_X="-0.214" pos_Y="0" pos_Z="0.0507" pos_r="0" pos_p="1.57" pos_y="0" />
-    <xacro:traction_wheel prefix="right_wheel" pos_X="0.193" pos_Y="0" pos_Z="0.0507" pos_r="0" pos_p="1.57" pos_y="0" />
+  <xacro:wheel prefix="left_wheel" pos_X="-0.214" pos_Y="0" pos_Z="0.0507" pos_r="0" pos_p="1.57" pos_y="0" />
+  <xacro:wheel prefix="right_wheel" pos_X="0.193" pos_Y="0" pos_Z="0.0507" pos_r="0" pos_p="1.57" pos_y="0" />
 
 </robot>

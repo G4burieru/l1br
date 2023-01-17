@@ -8,8 +8,9 @@ from launch.actions import DeclareLaunchArgument
 from launch.actions import IncludeLaunchDescription
 from launch.conditions import IfCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import LaunchConfiguration
+from launch.substitutions import LaunchConfiguration, Command
 from launch_ros.actions import Node
+from launch_ros.parameter_descriptions import ParameterValue
 
 
 def generate_launch_description():
@@ -17,15 +18,31 @@ def generate_launch_description():
     pkg_gazebo_ros = get_package_share_directory('gazebo_ros')
     pkg_rocket_gazebo = get_package_share_directory('rocket')
 
+    model_arg = DeclareLaunchArgument(name="model", default_value="/home/gabs/workspace/src/rocket/urdf/robozinho.urdf.xacro")
+
+    robot_description = ParameterValue(
+   	    Command(["xacro ", LaunchConfiguration("model")]) ,
+      	value_type=str ,
+    )
+ 
+    robot_state_publisher_node = Node(
+   	 	package= "robot_state_publisher" ,
+   	 	executable= "robot_state_publisher" ,
+   	 	name= "robot_state_publisher" ,
+   	 	parameters= [{"robot_description" : robot_description}],
+    )
+
     # Gazebo launch
     gazebo = Node(
         package="gazebo_ros" ,
         executable="spawn_entity.py" ,
         name="spawn_rocket" ,
         output="screen" ,
-        arguments= ["-file", "urdf/robozinho.urdf", "-entity", "rocket", "-z", "0.03"] ,
+        arguments= ["-topic", "/robot_description", "-entity", "rocket"] ,
     )
     
     return LaunchDescription([
+        model_arg ,
         gazebo ,
+        robot_state_publisher_node ,
     ])
