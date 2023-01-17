@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<sdf version="1.5">
+    <model name="a_mesa">
+        <static>true</static>
+                
+        <link name="a_mesa">
+            <pose>0 0 0 0 0 0</pose>
+            <static>true</static>
+            <visual name="visual">
+                <geometry>
+                        <mesh>
+                        <uri>model://a_mesa/a_mesa.dae</uri>
+                        <scale>1 1 1</scale>
+                        </mesh>
+                </geometry>
+            </visual>
+        </link>
+    </model>
+ </sdf>

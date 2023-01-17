@@ -1,0 +1,101 @@
+<?xml version="1.0" ?>
+<robot name="robozinho" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!-- ****************** ROBOT CONSTANTS *******************************  -->
+  <!-- Define the size of the robot's main chassis in meters -->
+  <xacro:property name="base_width" value="0.58"/>
+  <xacro:property name="base_length" value="0.85"/>
+  <xacro:property name="base_height" value="0.20"/>
+	
+  <!-- Define the shape of the robot's two back wheels in meters -->
+  <xacro:property name="wheel_radius" value="0.14"/>
+  <xacro:property name="wheel_width" value="0.04"/>
+
+  <!-- x-axis points forward, y-axis points to left, z-axis points upwards -->
+  <!-- Define the gap between the wheel and chassis along y-axis in meters -->
+  <xacro:property name="wheel_ygap" value="0.035"/>
+
+  <!-- Position the wheels along the z-axis -->
+  <xacro:property name="wheel_zoff" value="0.05"/>
+
+  <!-- Position the wheels along the x-axis -->
+  <xacro:property name="wheel_xoff" value="0.221"/>
+
+  <!-- ****************** ROBOT BASE FOOTPRINT ***************************  -->
+  <!-- Define the center of the main robot chassis projected on the ground -->	
+  <link name="base_footprint"/>
+
+  <!-- The base footprint of the robot is located underneath the chassis -->
+  <joint name="base_joint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="base_link" />
+    <origin xyz="0.0 0.0 0.0118" rpy="0 0 3.14"/>
+  </joint>
+
+  <!-- ********************** ROBOT BASE *********************************  -->
+  <link name="base_link">
+    <visual>
+      <origin xyz="0 0 3.14" rpy="0 0 3.14"/>
+      <geometry>
+        <mesh filename="package://rocket/meshes/EST_estrutura_m3.dae" />
+      </geometry>
+    </visual>
+
+    <collision>
+        <origin rpy="0  0  3.14" xyz="0  0  0.0118" />
+        <geometry>
+            <mesh filename="package://meshes/EST_estrutura_m3.dae" scale="1 1 1" />
+        </geometry>
+    </collision>
+
+    <inertial>
+         <origin xyz="0  0  0.0118" rpy="0  0  3.14"/>
+         <mass value="2.4"/>
+         <inertia ixx="0.019995" ixy="0.0" ixz="0.0"
+               iyy="0.019995" iyz="0.0"
+               izz="0.03675" />
+    </inertial>
+    
+  </link>
+
+  <!-- *********************** DRIVE WHEELS ******************************  -->
+
+  <xacro:macro name="wheel" params="prefix pos_X pos_Y pos_Z pos_r pos_p pos_y">
+    <link name="${prefix}">
+      <visual name="${prefix}_visual">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+            <mesh filename="package://rocket/meshes/M_rodatrativa.dae" scale="1 1 1"/>
+        </geometry>
+      </visual>
+      
+      <collision name="${prefix}_collision">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://meshes/M_rodatrativa.dae" scale="1 1 1"/>
+        </geometry>
+      </collision>
+      
+      <inertial>
+        <mass value="1" />
+        <origin rpy="0 0 0" xyz="0 0 0" />
+        <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+                iyy="0.001" iyz="0.0"
+                izz="0.001" />
+      </inertial>
+      
+    </link>
+
+    <joint name="joint_${prefix}" type="revolute">
+            <parent link="base_link" />
+            <child link="${prefix}" />
+            <origin rpy="${pos_r} ${pos_p} ${pos_y}" xyz="${pos_X} ${pos_Y} ${pos_Z}" />
+            <axis xyz="0 0 1" />
+            <limit effort="-1.0" lower="-1e+16" upper="1e+16" velocity="-1.0" />
+        </joint>
+   </xacro:macro>
+  
+    <xacro:traction_wheel prefix="left_wheel" pos_X="-0.214" pos_Y="0" pos_Z="0.0507" pos_r="0" pos_p="1.57" pos_y="0" />
+    <xacro:traction_wheel prefix="right_wheel" pos_X="0.193" pos_Y="0" pos_Z="0.0507" pos_r="0" pos_p="1.57" pos_y="0" />
+
+</robot>
