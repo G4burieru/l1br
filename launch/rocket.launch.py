@@ -18,18 +18,14 @@ def generate_launch_description():
     pkg_rocket_gazebo = get_package_share_directory('rocket')
 
     # Gazebo launch
-    gazebo = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            os.path.join(pkg_gazebo_ros, 'launch', 'gazebo.launch.py'),
-        )
+    gazebo = Node(
+        package="gazebo_ros" ,
+        executable="spawn_entity.py" ,
+        name="spawn_rocket" ,
+        output="screen" ,
+        arguments= ["-file", "urdf/robozinho.urdf", "-entity", "rocket", "-z", "0.03"] ,
     )
-
-
-
+    
     return LaunchDescription([
-        DeclareLaunchArgument(
-          'world',
-          default_value=[os.path.join(pkg_rocket_gazebo, 'worlds', 'rocket_empty.world'), ''],
-          description='SDF world file'),
-        gazebo
+        gazebo ,
     ])
