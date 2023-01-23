@@ -18,7 +18,7 @@ def generate_launch_description():
     pkg_gazebo_ros = get_package_share_directory('gazebo_ros')
     pkg_rocket_gazebo = get_package_share_directory('rocket')
 
-    model_arg = DeclareLaunchArgument(name="model", default_value="/home/gabs/workspace/src/rocket/urdf/robozinho.urdf.xacro")
+    model_arg = DeclareLaunchArgument(name="model", default_value="/home/renata_a/workspace/src/rocket/urdf/robozinho.urdf.xacro")
 
     robot_description = ParameterValue(
    	    Command(["xacro ", LaunchConfiguration("model")]) ,

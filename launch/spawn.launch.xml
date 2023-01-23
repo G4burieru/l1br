@@ -1,0 +1,5 @@
+<?xml version='1.0' ?>
+<launch>
+  <include file="$(find-pkg-share rocket)/launch/start_world.launch.py"/>
+  <include file="$(find-pkg-share rocket)/launch/rocket.launch.py"/>
+</launch>
