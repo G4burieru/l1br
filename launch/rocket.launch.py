@@ -2,7 +2,8 @@
 
 import os
 
-from ament_index_python.packages import get_package_share_directory
+from ament_index_python.packages import get_package_share_directory, get_package_share_path
+
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.actions import IncludeLaunchDescription
@@ -16,9 +17,10 @@ from launch_ros.parameter_descriptions import ParameterValue
 def generate_launch_description():
 
     pkg_gazebo_ros = get_package_share_directory('gazebo_ros')
-    pkg_rocket_gazebo = get_package_share_directory('rocket')
-
-    model_arg = DeclareLaunchArgument(name="model", default_value="/home/renata_a/workspace/src/rocket/urdf/robozinho.urdf.xacro")
+    pkg_rocket_gazebo = get_package_share_path('rocket')
+    
+    model_arg = DeclareLaunchArgument(name="model", default_value=str(pkg_rocket_gazebo / "urdf/robozinho.urdf.xacro"))
+    rviz_arg = DeclareLaunchArgument(name="rvizconfig", default_value=str(pkg_rocket_gazebo / "rviz/rviz_config.rviz"))
 
     robot_description = ParameterValue(
    	    Command(["xacro ", LaunchConfiguration("model")]) ,
@@ -41,8 +43,19 @@ def generate_launch_description():
         arguments= ["-topic", "/robot_description", "-entity", "rocket"] ,
     )
     
+    #Rviz launch
+    rviz = Node(
+    	package="rviz2",
+    	executable="rviz2",
+    	name="rviz2",
+    	output="screen",
+    	arguments= ["-d", LaunchConfiguration("rvizconfig")],
+    )
+    
     return LaunchDescription([
         model_arg ,
+        rviz_arg ,
+        rviz ,
         gazebo ,
         robot_state_publisher_node ,
     ])
