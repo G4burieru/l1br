@@ -10,15 +10,15 @@ from ament_index_python.packages import get_package_prefix
 def generate_launch_description():
 
     pkg_gazebo_ros = get_package_share_directory('gazebo_ros')
-    pkg_box_bot_gazebo = get_package_share_directory('my_box_bot_gazebo')
+    pkg_box_bot_gazebo = get_package_share_directory('rocket')
 
     # Usaremos todo o install dir
     # Se faz isso para evitar de ter que copiar ou fazer softlink manualmente dos pacotes
-    description_package_name = "my_box_bot_description"
+    description_package_name = "rocket"
     install_dir = get_package_prefix(description_package_name)
 
     # Seta o caminho para os modelos do world file
-    gazebo_models_path = os.path.join(pkg_box_bot_gazebo, 'models')
+    gazebo_models_path = os.path.join(rocket, 'models')
 
     if 'GAZEBO_MODELS_PATH' in os.environ:
         os.environ['GAZEBO_MODEL_PATH'] = os.environ['GAZEBO_MODEL_PATH'] + ':' + install_dir + '/share' + ':' + gazebo_models_path
@@ -46,7 +46,7 @@ def generate_launch_description():
     return LaunchDescription([
         DeclareLaunchArgument(
             'world',
-            default_value=[os.path.join(pkg_box_bot_gazebo, 'worlds', 'rocket_empty.world'), ''],
+            default_value=[os.path.join(rocket, 'worlds', 'rocket_empty.world'), ''],
             description='SDF world file'
             ),
             gazebo
