@@ -5,22 +5,15 @@
   <!-- Define the size of the robot's main chassis in meters -->
   <xacro:property name="base_width" value="0.557"/>
   <xacro:property name="base_length" value="0.617"/>
-  <xacro:property name="base_height" value="0.182"/>
+  <xacro:property name="base_height" value="0.1305"/>
 	
-  <!-- Define the shape of the robot's two back wheels in meters -->
+  <!-- Define the shape of the robot's two wheels in meters -->
   <xacro:property name="wheel_radius" value="0.07"/>
   <xacro:property name="wheel_width" value="0.03"/>
 
-  <!-- x-axis points forward, y-axis points to left, z-axis points upwards -->
-  <!-- Define the gap between the wheel and chassis along y-axis in meters -->
-  <xacro:property name="wheel_ygap" value="0.035"/>
-
-  <!-- Position the wheels along the z-axis -->
-  <xacro:property name="wheel_zoff" value="0.05"/>
-
-  <!-- Position the wheels along the x-axis -->
-  <xacro:property name="wheel_xoff" value="0.221"/>
-
+  <!-- Define the shape of the robot's tray in meters -->
+  <xacro:property name="tray_radius" value="0.2"/>
+  <xacro:property name="tray_width" value="0.041"/>
   <!-- ********************** ROBOT BASE *********************************  -->
   <link name="base_link">
     </link>
@@ -35,12 +28,12 @@
       <visual>
         <origin xyz="0  0  0" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="file:///$(find rocket)/meshes/EST_estrutura_m3.dae" />
+          <mesh filename="file:////home/renata_a/workspace/src/rocket/meshes/EST_estrutura_m3.dae" />
         </geometry>
       </visual>
 
       <collision>
-          <origin rpy="0  0  0" xyz="0  0  0" />
+          <origin rpy="0  0  0" xyz="0  0  -0.0118" />
           <geometry>
               <box size="${base_length} ${base_width} ${base_height}"/>
           </geometry>
@@ -62,12 +55,12 @@
       <visual name="left_wheel_visual">
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-            <mesh filename="file:///$(find rocket)/meshes/M_rodatrativa.dae" scale="1 1 1"/>
+            <mesh filename="file:////home/renata_a/workspace/src/rocket/meshes/M_rodatrativa.dae" scale="1 1 1"/>
         </geometry>
       </visual>
       
       <collision name="left_wheel_collision">
-        <origin xyz="0 0 0" rpy="0 0 1.57"/>
+        <origin xyz="0 -0.1 0.09" rpy="0 1.57 0"/>
         <geometry>
           <cylinder length="${wheel_width}" radius="${wheel_radius}"/>
         </geometry>
@@ -95,12 +88,12 @@
       <visual name="right_wheel_visual">
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-            <mesh filename="file:///$(find rocket)/meshes/M_rodatrativa.dae" scale="1 1 1"/>
+            <mesh filename="file:////home/renata_a/workspace/src/rocket/meshes/M_rodatrativa.dae" scale="1 1 1"/>
         </geometry>
       </visual>
       
       <collision name="right_wheel_collision">
-        <origin xyz="0 0 0" rpy="0 0 1.57"/>
+        <origin xyz="0 -0.1 0.09" rpy="0 1.57 0"/>
         <geometry>
           <cylinder length="${wheel_width}" radius="${wheel_radius}"/>
         </geometry>
@@ -130,14 +123,14 @@
       <visual name="tray_visual">
         <origin xyz="0 0 0.0118" rpy="0 0 0"/>
         <geometry>
-            <mesh filename="file:///$(find rocket)/meshes/ELV_conjuntocompleto.dae" scale="1 1 1"/>
+            <mesh filename="file:////home/renata_a/workspace/src/rocket/meshes/ELV_conjuntocompleto.dae" scale="1 1 1"/>
         </geometry>
       </visual>
       
       <collision name="tray_collision">
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="0 -0.015047 0.1" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="file:///$(find rocket)/meshes/ELV_conjuntocompleto.dae" scale="1 1 1"/>
+          <cylinder length="${tray_width}" radius="${tray_radius}"/>
         </geometry>
       </collision>
       
@@ -153,7 +146,7 @@
   <joint name="joint_tray" type="fixed">
             <parent link="chassis" />
             <child link="tray" />
-            <origin rpy="0 0 0" xyz="0 0 0" />
+            <origin rpy="0 0 0" xyz="0 0.015047 0" />
     </joint>
 
 </robot>
