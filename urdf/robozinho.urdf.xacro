@@ -28,7 +28,7 @@
       <visual>
         <origin xyz="0  0  0" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="file:////home/renata_a/workspace/src/rocket/meshes/EST_estrutura_m3.dae" />
+          <mesh filename="file:///$(find rocket)/meshes/EST_estrutura_m3.dae" />
         </geometry>
       </visual>
 
@@ -55,7 +55,7 @@
       <visual name="left_wheel_visual">
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-            <mesh filename="file:////home/renata_a/workspace/src/rocket/meshes/M_rodatrativa.dae" scale="1 1 1"/>
+            <mesh filename="file:///$(find rocket)/meshes/M_rodatrativa.dae" scale="1 1 1"/>
         </geometry>
       </visual>
       
@@ -88,7 +88,7 @@
       <visual name="right_wheel_visual">
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-            <mesh filename="file:////home/renata_a/workspace/src/rocket/meshes/M_rodatrativa.dae" scale="1 1 1"/>
+            <mesh filename="file:///$(find rocket)/meshes/M_rodatrativa.dae" scale="1 1 1"/>
         </geometry>
       </visual>
       
@@ -123,7 +123,7 @@
       <visual name="tray_visual">
         <origin xyz="0 0 0.0118" rpy="0 0 0"/>
         <geometry>
-            <mesh filename="file:////home/renata_a/workspace/src/rocket/meshes/ELV_conjuntocompleto.dae" scale="1 1 1"/>
+            <mesh filename="file:///$(find rocket)/meshes/ELV_conjuntocompleto.dae" scale="1 1 1"/>
         </geometry>
       </visual>
       
