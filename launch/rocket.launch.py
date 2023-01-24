@@ -21,6 +21,7 @@ def generate_launch_description():
     
     model_arg = DeclareLaunchArgument(name="model", default_value=str(pkg_rocket_gazebo / "urdf/robozinho.urdf.xacro"))
     rviz_arg = DeclareLaunchArgument(name="rvizconfig", default_value=str(pkg_rocket_gazebo / "rviz/rviz_config.rviz"))
+    gui_arg = DeclareLaunchArgument(name="gui", default_value="false", choices=["true", "false"], description="Flag to enable joint_state_publisher_gui")
 
     robot_description = ParameterValue(
    	    Command(["xacro ", LaunchConfiguration("model")]) ,
@@ -32,6 +33,12 @@ def generate_launch_description():
    	 	executable= "robot_state_publisher" ,
    	 	name= "robot_state_publisher" ,
    	 	parameters= [{"robot_description" : robot_description}],
+    )
+
+    joint_state_publisher_gui_node = Node(
+    package="joint_state_publisher_gui",
+    executable="joint_state_publisher_gui",
+    condition=IfCondition(LaunchConfiguration("gui"))
     )
 
     # Gazebo launch
@@ -52,10 +59,13 @@ def generate_launch_description():
     	arguments= ["-d", LaunchConfiguration("rvizconfig")],
     )
     
+
     return LaunchDescription([
         model_arg ,
         rviz_arg ,
+        gui_arg, 
         rviz ,
         gazebo ,
         robot_state_publisher_node ,
+        joint_state_publisher_gui_node ,
     ])
