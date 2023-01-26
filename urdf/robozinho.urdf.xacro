@@ -3,9 +3,9 @@
 
   <!-- ****************** ROBOT CONSTANTS *******************************  -->
   <!-- Define the size of the robot's main chassis in meters -->
-  <xacro:property name="base_width" value="0.557"/>
-  <xacro:property name="base_length" value="0.617"/>
-  <xacro:property name="base_height" value="0.1305"/>
+  <xacro:property name="base_width" value="0.47"/>
+  <xacro:property name="base_length" value="0.77"/>
+  <xacro:property name="base_height" value="0.15"/>
 	
   <!-- Define the shape of the robot's two wheels in meters -->
   <xacro:property name="wheel_radius" value="0.07"/>
@@ -33,7 +33,7 @@
       </visual>
 
       <collision>
-          <origin rpy="0  0  0" xyz="0  0  -0.0118" />
+          <origin rpy="0  0  0" xyz="0  0  0.01" />
           <geometry>
               <box size="${base_length} ${base_width} ${base_height}"/>
           </geometry>
@@ -60,7 +60,7 @@
       </visual>
       
       <collision name="left_wheel_collision">
-        <origin xyz="0 -0.1 0.09" rpy="0 1.57 0"/>
+        <origin xyz="0 0 0" rpy="0 1.57 0"/>
         <geometry>
           <cylinder length="${wheel_width}" radius="${wheel_radius}"/>
         </geometry>
@@ -68,7 +68,7 @@
       
       <inertial>
         <mass value="1" />
-        <origin rpy="0 1.57 0" xyz="0 -0.1 0.09" />
+        <origin rpy="0 1.57 0" xyz="0 0 0" />
         <inertia ixx="0.001" ixy="0.0" ixz="0.0"
                 iyy="0.001" iyz="0.0"
                 izz="0.001" />
@@ -79,8 +79,8 @@
     <joint name="joint_left_wheel" type="continuous">
             <parent link="chassis" />
             <child link="left_wheel" />
-            <origin rpy="0 0 1.57" xyz="-0.098795 -0.296755 -0.09915" />
-            <axis rpy="0 0 0" xyz="0 1 0"/>
+            <origin rpy="0 0 1.57" xyz=" 0 -0.296755 0" />
+            <axis rpy="0 0 0" xyz="1 0 0"/>
     </joint>
 
     <link name="right_wheel">
@@ -92,7 +92,7 @@
       </visual>
       
       <collision name="right_wheel_collision">
-        <origin xyz="0 -0.1 0.09" rpy="0 1.57 0"/>
+        <origin xyz="0 0 0" rpy="0 1.57 0"/>
         <geometry>
           <cylinder length="${wheel_width}" radius="${wheel_radius}"/>
         </geometry>
@@ -100,7 +100,7 @@
       
       <inertial>
         <mass value="1" />
-        <origin rpy="0 1.57 0" xyz="0 -0.1 0.09" />
+        <origin rpy="0 1.57 0" xyz="0 0 0" />
         <inertia ixx="0.001" ixy="0.0" ixz="0.0"
                 iyy="0.001" iyz="0.0"
                 izz="0.001" />
@@ -111,8 +111,8 @@
     <joint name="joint_right_wheel" type="continuous">
             <parent link="chassis" />
             <child link="right_wheel" />
-            <origin rpy="0 0 1.57" xyz="-0.098795 0.296395 -0.09915" />
-            <axis rpy="0 0 0" xyz="0 1 0"/>
+            <origin rpy="0 0 1.57" xyz="0 0.296395 0" />
+            <axis rpy="0 0 0" xyz="1 0 0"/>
     </joint>
 
   <!-- *********************** TRAY ******************************  -->

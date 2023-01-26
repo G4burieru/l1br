@@ -7,7 +7,7 @@ from ament_index_python.packages import get_package_share_directory, get_package
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.actions import IncludeLaunchDescription
-from launch.conditions import IfCondition
+from launch.conditions import IfCondition , UnlessCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration, Command
 from launch_ros.actions import Node
@@ -34,6 +34,12 @@ def generate_launch_description():
    	 	name= "robot_state_publisher" ,
    	 	parameters= [{"robot_description" : robot_description}],
     )
+
+    joint_state_publisher_node = Node(
+   		package="joint_state_publisher",
+   		executable="joint_state_publisher",
+   		condition=UnlessCondition(LaunchConfiguration("gui"))
+   	 )
 
     joint_state_publisher_gui_node = Node(
     package="joint_state_publisher_gui",
@@ -67,5 +73,6 @@ def generate_launch_description():
         rviz ,
         gazebo ,
         robot_state_publisher_node ,
+        joint_state_publisher_node ,
         joint_state_publisher_gui_node ,
     ])
