@@ -1,5 +1,12 @@
 <?xml version="1.0" ?>
-<robot name="robozinho" xmlns:xacro="http://ros.org/wiki/xacro">
+<robot name="rocket" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!--=========================== CONTROL ===========================-->
+  <xacro:include filename="$(find rocket)/urdf/rocket_control.xacro" />
+
+  <!--=========================== PLUGINS ===========================-->
+
+  <!-- <xacro:include filename="$(find rocket)/urdf/rocket.gazebo.xacro" /> -->
 
   <!-- ****************** ROBOT CONSTANTS *******************************  -->
   <!-- Define the size of the robot's main chassis in meters -->
@@ -145,12 +152,7 @@
             <parent link="chassis" />
             <child link="tray" />
             <origin rpy="0 0 0" xyz="0 0.015047 0" />
-    </joint>
+  </joint>
 
-  <gazebo>
-    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-      <robotNamespace>/</robotNamespace>
-    </plugin>
-  </gazebo>
 
 </robot>

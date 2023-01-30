@@ -6,9 +6,7 @@ from ament_index_python.packages import get_package_share_directory, get_package
 
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
-from launch.actions import IncludeLaunchDescription
 from launch.conditions import IfCondition , UnlessCondition
-from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration, Command
 from launch_ros.actions import Node
 from launch_ros.parameter_descriptions import ParameterValue
@@ -19,7 +17,7 @@ def generate_launch_description():
     pkg_gazebo_ros = get_package_share_directory('gazebo_ros')
     pkg_rocket_gazebo = get_package_share_path('rocket')
     
-    model_arg = DeclareLaunchArgument(name="model", default_value=str(pkg_rocket_gazebo / "urdf/robozinho.urdf.xacro"))
+    model_arg = DeclareLaunchArgument(name="model", default_value=str(pkg_rocket_gazebo / "urdf/rocket.urdf.xacro"))
     rviz_arg = DeclareLaunchArgument(name="rvizconfig", default_value=str(pkg_rocket_gazebo / "rviz/rviz_config.rviz"))
     gui_arg = DeclareLaunchArgument(name="gui", default_value="false", choices=["true", "false"], description="Flag to enable joint_state_publisher_gui")
 
@@ -39,14 +37,14 @@ def generate_launch_description():
    		package="joint_state_publisher",
    		executable="joint_state_publisher",
    		condition=UnlessCondition(LaunchConfiguration("gui"))
-   	 )
+    )
 
     joint_state_publisher_gui_node = Node(
     package="joint_state_publisher_gui",
     executable="joint_state_publisher_gui",
     condition=IfCondition(LaunchConfiguration("gui"))
     )
-
+    
     # Gazebo launch
     gazebo = Node(
         package="gazebo_ros" ,
