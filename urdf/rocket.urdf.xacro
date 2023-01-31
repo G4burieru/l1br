@@ -12,7 +12,7 @@
   <!-- Define the size of the robot's main chassis in meters -->
   <xacro:property name="base_width" value="0.47"/>
   <xacro:property name="base_length" value="0.77"/>
-  <xacro:property name="base_height" value="0.15"/>
+  <xacro:property name="base_height" value="0.13"/>
 	
   <!-- Define the shape of the robot's two wheels in meters -->
   <xacro:property name="wheel_radius" value="0.07"/>
@@ -24,6 +24,15 @@
   <!-- ********************** ROBOT BASE *********************************  -->
   <link name="base_link">
     </link>
+
+    <gazebo reference="chassis">
+      <selfCollide>true</selfCollide>
+      <mu1 value="0.3" />
+      <mu2 value="0.3" />
+      <kp value="1000000.0" />
+      <kd value="100" />
+      <fdir1 value="0 0 0" />
+    </gazebo>
     
     <joint name="base_joint" type="fixed">
       <parent link="base_link"/>
@@ -47,17 +56,26 @@
       </collision>
 
       <inertial>
-          <origin xyz="0  0  -0.0118" rpy="0  0  0"/>
+          <origin xyz="0  0  0" rpy="0  1.57  0"/>
           <mass value="2.4"/>
-          <inertia ixx="0.019995" ixy="0.0" ixz="0.0"
-                iyy="0.019995" iyz="0.0"
-                izz="0.03675" />
+          <inertia ixx="0.12196" ixy="0.0" ixz="0.0"
+                iyy="0.16276" iyz="0.0"
+                izz="0.14756" />
       </inertial>
     
     </link>
 
   <!-- *********************** DRIVE WHEELS ******************************  -->
-  
+    <gazebo reference="left_wheel">
+      <selfCollide>false</selfCollide>
+      <mu1>1.0</mu1>
+      <mu2>1.0</mu2>
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <maxVel>1.0</maxVel>
+      <fdir1 value="0 0 0" />
+    </gazebo>
+
     <link name="left_wheel">
       <visual name="left_wheel_visual">
         <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -89,6 +107,16 @@
             <origin rpy="0 0 1.57" xyz=" 0 -0.296755 0" />
             <axis rpy="0 0 0" xyz="1 0 0"/>
     </joint>
+
+    <gazebo reference="right_wheel">
+      <selfCollide>false</selfCollide>
+      <mu1>1.0</mu1>
+      <mu2>1.0</mu2>
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <maxVel>1.0</maxVel>
+      <fdir1 value="0 0 0" />
+    </gazebo>
 
     <link name="right_wheel">
       <visual name="right_wheel_visual">
@@ -141,7 +169,7 @@
       
       <inertial>
         <mass value="0.5" />
-        <origin rpy="0 0 0" xyz="0 -0.015047 0.1" />
+        <origin rpy="0 0 0" xyz="0 0 0" />
         <inertia ixx="0.0" ixy="0.0" ixz="0.0"
                 iyy="0.0" iyz="0.0"
                 izz="0.0" />
@@ -154,5 +182,174 @@
             <origin rpy="0 0 0" xyz="0 0.015047 0" />
   </joint>
 
+  <!-- *********************** CASTER WHEELS ******************************  -->
+
+  <gazebo reference="back_left_caster_wheel">
+      <selfCollide>true</selfCollide>
+      <mu1 value="0.09" />
+      <mu2 value="0.09" />
+      <kp value="10000000.0" />
+      <kd value="10000" />
+      <fdir1 value="0 0 0" />
+  </gazebo>
+
+  <link name="back_left_caster_wheel">
+    <visual name="back_left_caster_wheel_visual">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.01"/>
+      </geometry>
+      <material name="Black">
+          <color rgba="${0/255} ${0/255} ${0/255} 1.0"/>
+     </material>
+    </visual>
+
+    <collision name="back_left_caster_wheel_collision">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.01"/>
+      </geometry>
+    </collision>
+
+    <inertial>
+        <mass value="0.1" />
+        <origin rpy="0 0 0" xyz="0 0 0" />
+        <inertia ixx="0" ixy="0.0" ixz="0.0"
+                iyy="0" iyz="0.0"
+                izz="0" />
+      </inertial>
+  </link>
+
+  <joint name="joint_back_left_caster_wheel" type="fixed">
+    <parent link="chassis"/>
+    <child link="back_left_caster_wheel"/>
+    <origin rpy="0 0 0" xyz="0.32 0.07 -0.06"/>
+  </joint>
+
+  <gazebo reference="back_right_caster_wheel">
+      <selfCollide>true</selfCollide>
+      <mu1 value="0.09" />
+      <mu2 value="0.09" />
+      <kp value="10000000.0" />
+      <kd value="10000" />
+      <fdir1 value="0 0 0" />
+  </gazebo>
+
+  <link name="back_right_caster_wheel">
+    <visual name="back_right_caster_wheel_visual">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.01"/>
+      </geometry>
+      <material name="Black">
+          <color rgba="${0/255} ${0/255} ${0/255} 1.0"/>
+     </material>
+    </visual>
+
+    <collision name="back_right_caster_wheel_collision">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.01"/>
+      </geometry>
+    </collision>
+
+    <inertial>
+        <mass value="0.1" />
+        <origin rpy="0 0 0" xyz="0 0 0" />
+        <inertia ixx="0" ixy="0.0" ixz="0.0"
+                iyy="0" iyz="0.0"
+                izz="0" />
+      </inertial>
+  </link>
+
+  <joint name="joint_back_right_caster_wheel" type="fixed">
+    <parent link="chassis"/>
+    <child link="back_right_caster_wheel"/>
+    <origin rpy="0 0 0" xyz="0.32 -0.07 -0.06"/>
+  </joint>
+
+  <gazebo reference="front_left_caster_wheel">
+      <selfCollide>true</selfCollide>
+      <mu1 value="0.09" />
+      <mu2 value="0.09" />
+      <kp value="10000000.0" />
+      <kd value="10000" />
+      <fdir1 value="0 0 0" />
+  </gazebo>
+
+  <link name="front_left_caster_wheel">
+    <visual name="front_left_caster_wheel_visual">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.01"/>
+      </geometry>
+      <material name="Black">
+          <color rgba="${0/255} ${0/255} ${0/255} 1.0"/>
+     </material>
+    </visual>
+
+    <collision name="front_left_caster_wheel_collision">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.01"/>
+      </geometry>
+    </collision>
+
+    <inertial>
+        <mass value="0.1" />
+        <origin rpy="0 0 0" xyz="0 0 0" />
+        <inertia ixx="0" ixy="0.0" ixz="0.0"
+                iyy="0" iyz="0.0"
+                izz="0" />
+      </inertial>
+  </link>
+
+  <joint name="joint_front_left_caster_wheel" type="fixed">
+    <parent link="chassis"/>
+    <child link="front_left_caster_wheel"/>
+    <origin rpy="0 0 0" xyz="-0.32 0.07 -0.06"/>
+  </joint>
+
+  <gazebo reference="front_right_caster_wheel">
+      <selfCollide>true</selfCollide>
+      <mu1 value="0.09" />
+      <mu2 value="0.09" />
+      <kp value="10000000.0" />
+      <kd value="10000" />
+      <fdir1 value="0 0 0" />
+  </gazebo>
+
+  <link name="front_right_caster_wheel">
+    <visual name="front_right_caster_wheel_visual">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.01"/>
+      </geometry>
+      <material name="Black">
+          <color rgba="${0/255} ${0/255} ${0/255} 1.0"/>
+     </material>
+    </visual>
+
+    <collision name="front_right_caster_wheel_collision">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.01"/>
+      </geometry>
+    </collision>
+
+    <inertial>
+        <mass value="0.1" />
+        <origin rpy="0 0 0" xyz="0 0 0" />
+        <inertia ixx="0" ixy="0.0" ixz="0.0"
+                iyy="0" iyz="0.0"
+                izz="0" />
+      </inertial>
+  </link>
+
+  <joint name="joint_front_right_caster_wheel" type="fixed">
+    <parent link="chassis"/>
+    <child link="front_right_caster_wheel"/>
+    <origin rpy="0 0 0" xyz="-0.32 -0.07 -0.06"/>
+  </joint>  
 
 </robot>
