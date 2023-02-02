@@ -2,7 +2,9 @@
 <robot name="rocket" xmlns:xacro="http://ros.org/wiki/xacro">
 
   <!--=========================== CONTROL ===========================-->
-  <xacro:include filename="$(find rocket)/urdf/rocket_control.xacro" />
+  <xacro:include filename="rocket_control.xacro" />
+
+  
 
   <!--=========================== PLUGINS ===========================-->
 
@@ -350,6 +352,7 @@
     <parent link="chassis"/>
     <child link="front_right_caster_wheel"/>
     <origin rpy="0 0 0" xyz="-0.32 -0.07 -0.06"/>
-  </joint>  
+  </joint> 
+  
 
 </robot>

@@ -18,7 +18,7 @@ def generate_launch_description():
     pkg_rocket_gazebo = get_package_share_path('rocket')
     
     model_arg = DeclareLaunchArgument(name="model", default_value=str(pkg_rocket_gazebo / "urdf/rocket.urdf.xacro"))
-    rviz_arg = DeclareLaunchArgument(name="rvizconfig", default_value=str(pkg_rocket_gazebo / "rviz/rviz_config.rviz"))
+    rviz_arg = DeclareLaunchArgument(name="rvizconfig", default_value=str(pkg_rocket_gazebo / "config/rviz_config.rviz"))
     gui_arg = DeclareLaunchArgument(name="gui", default_value="false", choices=["true", "false"], description="Flag to enable joint_state_publisher_gui")
 
     robot_description = ParameterValue(

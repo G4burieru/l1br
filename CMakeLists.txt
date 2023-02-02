@@ -15,9 +15,9 @@ install(
     launch
     meshes
     models
-    rviz
     worlds
     urdf
+    config
   DESTINATION
     share/${PROJECT_NAME}/
 )
