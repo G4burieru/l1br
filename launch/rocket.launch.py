@@ -62,14 +62,26 @@ def generate_launch_description():
     	output="screen",
     	arguments= ["-d", LaunchConfiguration("rvizconfig")],
     )
-    
 
+    diff_drive_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["diff_cont"],
+    )
+
+    joint_broad_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["joint_broad"],
+    )
     return LaunchDescription([
         model_arg ,
         rviz_arg ,
         gui_arg, 
         rviz ,
         gazebo ,
+        diff_drive_spawner ,
+        joint_broad_spawner ,
         robot_state_publisher_node ,
         joint_state_publisher_node ,
         joint_state_publisher_gui_node ,
