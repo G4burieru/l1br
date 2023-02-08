@@ -17,18 +17,27 @@
   <xacro:property name="base_height" value="0.13"/>
 	
   <!-- Define the shape of the robot's two wheels in meters -->
-  <xacro:property name="wheel_radius" value="0.07"/>
+  <xacro:property name="wheel_radius" value="0.08"/>
   <xacro:property name="wheel_width" value="0.03"/>
 
   <!-- Define the shape of the robot's tray in meters -->
   <xacro:property name="tray_radius" value="0.2"/>
   <xacro:property name="tray_width" value="0.041"/>
+
+  <!-- Define the shape of the robot's four caster wheels in meters -->
+  <xacro:property name="caster_wheel_radius" value="0.01"/>
+
+  <!-- Colors -->
+  <material name="black">
+      <color rgba="0.0 0.0 0.0 1.0"/>
+  </material>
+
   <!-- ********************** ROBOT BASE *********************************  -->
   <link name="base_link">
     </link>
 
     <gazebo reference="chassis">
-      <selfCollide>true</selfCollide>
+      <!-- <selfCollide>true</selfCollide> -->
       <mu1 value="0.3" />
       <mu2 value="0.3" />
       <kp value="1000000.0" />
@@ -61,21 +70,21 @@
           <origin xyz="0  0  0" rpy="0  1.57  0"/>
           <mass value="2.4"/>
           <inertia ixx="0.12196" ixy="0.0" ixz="0.0"
-                iyy="0.16276" iyz="0.0"
-                izz="0.14756" />
+                iyy="0.04756" iyz="0.0"
+                izz="0.16276" />
       </inertial>
     
     </link>
 
   <!-- *********************** DRIVE WHEELS ******************************  -->
     <gazebo reference="left_wheel">
-      <selfCollide>false</selfCollide>
+      <!-- <selfCollide>false</selfCollide> -->
       <mu1>1.0</mu1>
       <mu2>1.0</mu2>
       <kp>1000000.0</kp>
       <kd>100.0</kd>
-      <maxVel>1.0</maxVel>
-      <fdir1 value="0 0 0" />
+      <!-- <maxVel>1.0</maxVel> -->
+      <!-- <fdir1 value="0 0 0" /> -->
     </gazebo>
 
     <link name="left_wheel">
@@ -96,9 +105,9 @@
       <inertial>
         <mass value="1" />
         <origin rpy="0 1.57 0" xyz="0 0 0" />
-        <inertia ixx="0.001" ixy="0.0" ixz="0.0"
-                iyy="0.001" iyz="0.0"
-                izz="0.001" />
+        <inertia ixx="0.0013" ixy="0.0" ixz="0.0"
+                iyy="0.0013" iyz="0.0"
+                izz="0.00245" />
       </inertial>
       
     </link>
@@ -111,13 +120,13 @@
     </joint>
 
     <gazebo reference="right_wheel">
-      <selfCollide>false</selfCollide>
+      <!-- <selfCollide>false</selfCollide> -->
       <mu1>1.0</mu1>
       <mu2>1.0</mu2>
       <kp>1000000.0</kp>
       <kd>100.0</kd>
-      <maxVel>1.0</maxVel>
-      <fdir1 value="0 0 0" />
+      <!-- <maxVel>1.0</maxVel> -->
+      <!-- <fdir1 value="0 0 0" /> -->
     </gazebo>
 
     <link name="right_wheel">
@@ -138,9 +147,9 @@
       <inertial>
         <mass value="1" />
         <origin rpy="0 1.57 0" xyz="0 0 0" />
-        <inertia ixx="0.001" ixy="0.0" ixz="0.0"
-                iyy="0.001" iyz="0.0"
-                izz="0.001" />
+        <inertia ixx="0.0013" ixy="0.0" ixz="0.0"
+                iyy="0.0013" iyz="0.0"
+                izz="0.00245" />
       </inertial>
       
     </link>
@@ -192,18 +201,16 @@
       <mu2 value="0.09" />
       <kp value="10000000.0" />
       <kd value="10000" />
-      <fdir1 value="0 0 0" />
+      <!-- <fdir1 value="0 0 0" /> -->
   </gazebo>
 
   <link name="back_left_caster_wheel">
     <visual name="back_left_caster_wheel_visual">
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <sphere radius="0.01"/>
+        <sphere radius="${caster_wheel_radius}"/>
       </geometry>
-      <material name="Black">
-          <color rgba="${0/255} ${0/255} ${0/255} 1.0"/>
-     </material>
+      <material name="black"/>
     </visual>
 
     <collision name="back_left_caster_wheel_collision">
@@ -214,18 +221,18 @@
     </collision>
 
     <inertial>
-        <mass value="0.1" />
-        <origin rpy="0 0 0" xyz="0 0 0" />
-        <inertia ixx="0" ixy="0.0" ixz="0.0"
-                iyy="0" iyz="0.0"
-                izz="0" />
-      </inertial>
+      <origin xyz="0 0 0" />
+      <mass value="0.005" />
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+               iyy="0.001" iyz="0.0"
+               izz="0.001" />
+    </inertial>
   </link>
 
   <joint name="joint_back_left_caster_wheel" type="fixed">
     <parent link="chassis"/>
     <child link="back_left_caster_wheel"/>
-    <origin rpy="0 0 0" xyz="0.32 0.07 -0.06"/>
+    <origin rpy="-1.57 0 0" xyz="0.32 0.07 -0.06"/>
   </joint>
 
   <gazebo reference="back_right_caster_wheel">
@@ -234,18 +241,16 @@
       <mu2 value="0.09" />
       <kp value="10000000.0" />
       <kd value="10000" />
-      <fdir1 value="0 0 0" />
+      <!-- <fdir1 value="0 0 0" /> -->
   </gazebo>
 
   <link name="back_right_caster_wheel">
     <visual name="back_right_caster_wheel_visual">
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <sphere radius="0.01"/>
+        <sphere radius="${caster_wheel_radius}"/>
       </geometry>
-      <material name="Black">
-          <color rgba="${0/255} ${0/255} ${0/255} 1.0"/>
-     </material>
+      <material name="black"/>
     </visual>
 
     <collision name="back_right_caster_wheel_collision">
@@ -256,18 +261,18 @@
     </collision>
 
     <inertial>
-        <mass value="0.1" />
-        <origin rpy="0 0 0" xyz="0 0 0" />
-        <inertia ixx="0" ixy="0.0" ixz="0.0"
-                iyy="0" iyz="0.0"
-                izz="0" />
-      </inertial>
+      <origin xyz="0 0 0" />
+      <mass value="0.005" />
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+               iyy="0.001" iyz="0.0"
+               izz="0.001" />
+    </inertial>
   </link>
 
   <joint name="joint_back_right_caster_wheel" type="fixed">
     <parent link="chassis"/>
     <child link="back_right_caster_wheel"/>
-    <origin rpy="0 0 0" xyz="0.32 -0.07 -0.06"/>
+    <origin rpy="-1.57 0 0" xyz="0.32 -0.07 -0.06"/>
   </joint>
 
   <gazebo reference="front_left_caster_wheel">
@@ -276,18 +281,16 @@
       <mu2 value="0.09" />
       <kp value="10000000.0" />
       <kd value="10000" />
-      <fdir1 value="0 0 0" />
+      <!-- <fdir1 value="0 0 0" /> -->
   </gazebo>
 
   <link name="front_left_caster_wheel">
     <visual name="front_left_caster_wheel_visual">
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <sphere radius="0.01"/>
+        <sphere radius="${caster_wheel_radius}"/>
       </geometry>
-      <material name="Black">
-          <color rgba="${0/255} ${0/255} ${0/255} 1.0"/>
-     </material>
+      <material name="black"/>
     </visual>
 
     <collision name="front_left_caster_wheel_collision">
@@ -298,18 +301,18 @@
     </collision>
 
     <inertial>
-        <mass value="0.1" />
-        <origin rpy="0 0 0" xyz="0 0 0" />
-        <inertia ixx="0" ixy="0.0" ixz="0.0"
-                iyy="0" iyz="0.0"
-                izz="0" />
-      </inertial>
+      <origin xyz="0 0 0" />
+      <mass value="0.005" />
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+               iyy="0.001" iyz="0.0"
+               izz="0.001" />
+        </inertial>
   </link>
 
   <joint name="joint_front_left_caster_wheel" type="fixed">
     <parent link="chassis"/>
     <child link="front_left_caster_wheel"/>
-    <origin rpy="0 0 0" xyz="-0.32 0.07 -0.06"/>
+    <origin rpy="-1.57 0 0" xyz="-0.32 0.07 -0.06"/>
   </joint>
 
   <gazebo reference="front_right_caster_wheel">
@@ -318,18 +321,16 @@
       <mu2 value="0.09" />
       <kp value="10000000.0" />
       <kd value="10000" />
-      <fdir1 value="0 0 0" />
+      <!-- <fdir1 value="0 0 0" /> -->
   </gazebo>
 
   <link name="front_right_caster_wheel">
     <visual name="front_right_caster_wheel_visual">
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <sphere radius="0.01"/>
+        <sphere radius="${caster_wheel_radius}"/>
       </geometry>
-      <material name="Black">
-          <color rgba="${0/255} ${0/255} ${0/255} 1.0"/>
-     </material>
+      <material name="black"/>
     </visual>
 
     <collision name="front_right_caster_wheel_collision">
@@ -340,18 +341,18 @@
     </collision>
 
     <inertial>
-        <mass value="0.1" />
-        <origin rpy="0 0 0" xyz="0 0 0" />
-        <inertia ixx="0" ixy="0.0" ixz="0.0"
-                iyy="0" iyz="0.0"
-                izz="0" />
-      </inertial>
+      <origin xyz="0 0 0" />
+      <mass value="0.005" />
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+               iyy="0.001" iyz="0.0"
+               izz="0.001" />
+    </inertial>
   </link>
 
   <joint name="joint_front_right_caster_wheel" type="fixed">
     <parent link="chassis"/>
     <child link="front_right_caster_wheel"/>
-    <origin rpy="0 0 0" xyz="-0.32 -0.07 -0.06"/>
+    <origin rpy="-1.57 0 0" xyz="-0.32 -0.07 -0.06"/>
   </joint> 
   
 
