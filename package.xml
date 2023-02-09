@@ -16,9 +16,6 @@
   <exec_depend>joint_state_publisher</exec_depend>
   <exec_depend>xacro</exec_depend>
   <exec_depend>robot_state_publisher</exec_depend>
-  <exec_depend>ros-humble-ros2-control</exec_depend>
-  <exec_depend>ros-humble-ros2-controllers</exec_depend>
-  <exec_depend>ros-humble-gazebo-ros2-control</exec_depend>
   <export>
     <build_type>ament_cmake</build_type>
   </export>

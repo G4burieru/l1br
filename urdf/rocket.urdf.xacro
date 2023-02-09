@@ -17,7 +17,7 @@
   <xacro:property name="base_height" value="0.13"/>
 	
   <!-- Define the shape of the robot's two wheels in meters -->
-  <xacro:property name="wheel_radius" value="0.08"/>
+  <xacro:property name="wheel_radius" value="0.07"/>
   <xacro:property name="wheel_width" value="0.03"/>
 
   <!-- Define the shape of the robot's tray in meters -->
@@ -37,7 +37,6 @@
     </link>
 
     <gazebo reference="chassis">
-      <!-- <selfCollide>true</selfCollide> -->
       <mu1 value="0.3" />
       <mu2 value="0.3" />
       <kp value="1000000.0" />
@@ -48,7 +47,7 @@
     <joint name="base_joint" type="fixed">
       <parent link="base_link"/>
       <child link="chassis" />
-      <origin xyz="0.0 0.0 0.0118" rpy="0 0 3.14"/>
+      <origin xyz="0.0 0.0 0.0" rpy="0 0 3.14"/>
     </joint>
 
     <link name="chassis">
@@ -78,13 +77,10 @@
 
   <!-- *********************** DRIVE WHEELS ******************************  -->
     <gazebo reference="left_wheel">
-      <!-- <selfCollide>false</selfCollide> -->
       <mu1>1.0</mu1>
       <mu2>1.0</mu2>
       <kp>1000000.0</kp>
       <kd>100.0</kd>
-      <!-- <maxVel>1.0</maxVel> -->
-      <!-- <fdir1 value="0 0 0" /> -->
     </gazebo>
 
     <link name="left_wheel">
@@ -115,7 +111,7 @@
     <joint name="joint_left_wheel" type="continuous">
             <parent link="chassis" />
             <child link="left_wheel" />
-            <origin rpy="0 0 1.57" xyz=" 0 -0.296755 0" />
+            <origin rpy="0 0 1.57" xyz=" 0 -0.296755 -0.0118" />
             <axis rpy="0 0 0" xyz="1 0 0"/>
     </joint>
 
@@ -157,7 +153,7 @@
     <joint name="joint_right_wheel" type="continuous">
             <parent link="chassis" />
             <child link="right_wheel" />
-            <origin rpy="0 0 1.57" xyz="0 0.296395 0" />
+            <origin rpy="0 0 1.57" xyz="0 0.296395 -0.0118" />
             <axis rpy="0 0 0" xyz="1 0 0"/>
     </joint>
 
@@ -201,7 +197,6 @@
       <mu2 value="0.09" />
       <kp value="10000000.0" />
       <kd value="10000" />
-      <!-- <fdir1 value="0 0 0" /> -->
   </gazebo>
 
   <link name="back_left_caster_wheel">
