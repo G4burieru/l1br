@@ -1,14 +1,16 @@
 <?xml version="1.0" ?>
-<robot name="rocket" xmlns:xacro="http://ros.org/wiki/xacro">
+<robot name="l1br" xmlns:xacro="http://ros.org/wiki/xacro">
 
   <!--=========================== CONTROL ===========================-->
-  <xacro:include filename="rocket_control.xacro" />
+  <xacro:include filename="l1br_control.xacro" />
+  <xacro:include filename="sensors/imu_sensor.urdf.xacro" />
+  <xacro:include filename="sensors/laser_sensor.urdf.xacro" />
 
   
 
   <!--=========================== PLUGINS ===========================-->
 
-  <!-- <xacro:include filename="$(find rocket)/urdf/rocket.gazebo.xacro" /> -->
+  <!-- <xacro:include filename="$(find l1br)/urdf/l1br.gazebo.xacro" /> -->
 
   <!-- ****************** ROBOT CONSTANTS *******************************  -->
   <!-- Define the size of the robot's main base_link in meters -->
@@ -54,7 +56,7 @@
       <visual>
         <origin xyz="0  0  0" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="file:///$(find rocket)/meshes/EST_estrutura_m3.dae" />
+          <mesh filename="file:///$(find l1br)/meshes/EST_estrutura_m3.dae" />
         </geometry>
       </visual>
 
@@ -66,7 +68,7 @@
       </collision>
 
       <inertial>
-          <origin xyz="0  0  0" rpy="0  1.57  0"/>
+          <origin xyz="0  0  0.0" rpy="0 0 1.57"/>
           <mass value="2.4"/>
           <inertia ixx="0.12196" ixy="0.0" ixz="0.0"
                 iyy="0.04756" iyz="0.0"
@@ -87,7 +89,7 @@
       <visual name="left_wheel_visual">
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-            <mesh filename="file:///$(find rocket)/meshes/M_rodatrativa.dae" scale="1 1 1"/>
+            <mesh filename="file:///$(find l1br)/meshes/M_rodatrativa.dae" scale="1 1 1"/>
         </geometry>
       </visual>
       
@@ -99,19 +101,18 @@
       </collision>
       
       <inertial>
-        <mass value="1" />
         <origin rpy="0 1.57 0" xyz="0 0 0" />
-        <inertia ixx="0.0013" ixy="0.0" ixz="0.0"
-                iyy="0.0013" iyz="0.0"
-                izz="0.00245" />
+        <mass value="1"/>
+        <inertia ixx="${(2/5) * 1 * (wheel_radius * wheel_radius)}" ixy="0" ixz="0"
+                iyy="${(2/5) * 1 * (wheel_radius * wheel_radius)}" iyz="0"
+                izz="${(2/5) * 1 * (wheel_radius * wheel_radius)}" />
       </inertial>
-      
     </link>
 
     <joint name="joint_left_wheel" type="continuous">
             <parent link="base_link" />
             <child link="left_wheel" />
-            <origin rpy="0 0 1.57" xyz=" 0 -0.296755 -0.0118" />
+            <origin rpy="0 0 1.57" xyz=" 0 0.296755 -0.0118" />
             <axis rpy="0 0 0" xyz="1 0 0"/>
     </joint>
 
@@ -129,7 +130,7 @@
       <visual name="right_wheel_visual">
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-            <mesh filename="file:///$(find rocket)/meshes/M_rodatrativa.dae" scale="1 1 1"/>
+            <mesh filename="file:///$(find l1br)/meshes/M_rodatrativa.dae" scale="1 1 1"/>
         </geometry>
       </visual>
       
@@ -141,19 +142,18 @@
       </collision>
       
       <inertial>
-        <mass value="1" />
         <origin rpy="0 1.57 0" xyz="0 0 0" />
-        <inertia ixx="0.0013" ixy="0.0" ixz="0.0"
-                iyy="0.0013" iyz="0.0"
-                izz="0.00245" />
+        <mass value="1"/>
+        <inertia ixx="${(2/5) * 1 * (wheel_radius * wheel_radius)}" ixy="0" ixz="0"
+                iyy="${(2/5) * 1 * (wheel_radius * wheel_radius)}" iyz="0"
+                izz="${(2/5) * 1 * (wheel_radius * wheel_radius)}" />
       </inertial>
-      
     </link>
 
     <joint name="joint_right_wheel" type="continuous">
             <parent link="base_link" />
             <child link="right_wheel" />
-            <origin rpy="0 0 1.57" xyz="0 0.296395 -0.0118" />
+            <origin rpy="0 0 1.57" xyz="0 -0.296395 -0.0118" />
             <axis rpy="0 0 0" xyz="1 0 0"/>
     </joint>
 
@@ -163,7 +163,7 @@
       <visual name="tray_visual">
         <origin xyz="0 0 0.0118" rpy="0 0 0"/>
         <geometry>
-            <mesh filename="file:///$(find rocket)/meshes/ELV_conjuntocompleto.dae" scale="1 1 1"/>
+            <mesh filename="file:///$(find l1br)/meshes/ELV_conjuntocompleto.dae" scale="1 1 1"/>
         </geometry>
       </visual>
       
@@ -192,7 +192,7 @@
   <!-- *********************** CASTER WHEELS ******************************  -->
 
   <gazebo reference="back_left_caster_wheel">
-      <selfCollide>true</selfCollide>
+      <selfCollide>false</selfCollide>
       <mu1 value="0.09" />
       <mu2 value="0.09" />
       <kp value="10000000.0" />
@@ -216,22 +216,23 @@
     </collision>
 
     <inertial>
-      <origin xyz="0 0 0" />
-      <mass value="0.005" />
-      <inertia ixx="0.001" ixy="0.0" ixz="0.0"
-               iyy="0.001" iyz="0.0"
-               izz="0.001" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.005"/>
+      <inertia ixx="${(2/5) * 0.005 * (caster_wheel_radius * caster_wheel_radius)}" ixy="0" ixz="0"
+              iyy="${(2/5) * 0.005 * (caster_wheel_radius * caster_wheel_radius)}" iyz="0"
+              izz="${(2/5) * 0.005 * (caster_wheel_radius * caster_wheel_radius)}" />
     </inertial>
   </link>
 
-  <joint name="joint_back_left_caster_wheel" type="fixed">
+  <joint name="joint_back_left_caster_wheel" type="continuous">
     <parent link="base_link"/>
     <child link="back_left_caster_wheel"/>
-    <origin rpy="-1.57 0 0" xyz="0.32 0.07 -0.06"/>
+    <origin rpy="-1.57 0 0" xyz="0.32 0.07 -0.0693"/>
+    <axis rpy="0 0 0" xyz="1 0 0"/>
   </joint>
 
   <gazebo reference="back_right_caster_wheel">
-      <selfCollide>true</selfCollide>
+      <selfCollide>false</selfCollide>
       <mu1 value="0.09" />
       <mu2 value="0.09" />
       <kp value="10000000.0" />
@@ -256,22 +257,23 @@
     </collision>
 
     <inertial>
-      <origin xyz="0 0 0" />
-      <mass value="0.005" />
-      <inertia ixx="0.001" ixy="0.0" ixz="0.0"
-               iyy="0.001" iyz="0.0"
-               izz="0.001" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.005"/>
+      <inertia ixx="${(2/5) * 0.005 * (caster_wheel_radius * caster_wheel_radius)}" ixy="0" ixz="0"
+              iyy="${(2/5) * 0.005 * (caster_wheel_radius * caster_wheel_radius)}" iyz="0"
+              izz="${(2/5) * 0.005 * (caster_wheel_radius * caster_wheel_radius)}" />
     </inertial>
   </link>
 
-  <joint name="joint_back_right_caster_wheel" type="fixed">
+  <joint name="joint_back_right_caster_wheel" type="continuous">
     <parent link="base_link"/>
     <child link="back_right_caster_wheel"/>
-    <origin rpy="-1.57 0 0" xyz="0.32 -0.07 -0.06"/>
+    <origin rpy="-1.57 0 0" xyz="0.32 -0.07 -0.0693"/>
+    <axis rpy="0 0 0" xyz="1 0 0"/>
   </joint>
 
   <gazebo reference="front_left_caster_wheel">
-      <selfCollide>true</selfCollide>
+      <selfCollide>false</selfCollide>
       <mu1 value="0.09" />
       <mu2 value="0.09" />
       <kp value="10000000.0" />
@@ -296,22 +298,23 @@
     </collision>
 
     <inertial>
-      <origin xyz="0 0 0" />
-      <mass value="0.005" />
-      <inertia ixx="0.001" ixy="0.0" ixz="0.0"
-               iyy="0.001" iyz="0.0"
-               izz="0.001" />
-        </inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.005"/>
+      <inertia ixx="${(2/5) * 0.005 * (caster_wheel_radius * caster_wheel_radius)}" ixy="0" ixz="0"
+              iyy="${(2/5) * 0.005 * (caster_wheel_radius * caster_wheel_radius)}" iyz="0"
+              izz="${(2/5) * 0.005 * (caster_wheel_radius * caster_wheel_radius)}" />
+    </inertial>
   </link>
 
-  <joint name="joint_front_left_caster_wheel" type="fixed">
+  <joint name="joint_front_left_caster_wheel" type="continuous">
     <parent link="base_link"/>
     <child link="front_left_caster_wheel"/>
-    <origin rpy="-1.57 0 0" xyz="-0.32 0.07 -0.06"/>
+    <origin rpy="-1.57 0 0" xyz="-0.32 0.07 -0.0693"/>
+    <axis rpy="0 0 0" xyz="1 0 0"/>
   </joint>
 
   <gazebo reference="front_right_caster_wheel">
-      <selfCollide>true</selfCollide>
+      <selfCollide>false</selfCollide>
       <mu1 value="0.09" />
       <mu2 value="0.09" />
       <kp value="10000000.0" />
@@ -336,19 +339,34 @@
     </collision>
 
     <inertial>
-      <origin xyz="0 0 0" />
-      <mass value="0.005" />
-      <inertia ixx="0.001" ixy="0.0" ixz="0.0"
-               iyy="0.001" iyz="0.0"
-               izz="0.001" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.005"/>
+      <inertia ixx="${(2/5) * 0.005 * (caster_wheel_radius * caster_wheel_radius)}" ixy="0" ixz="0"
+              iyy="${(2/5) * 0.005 * (caster_wheel_radius * caster_wheel_radius)}" iyz="0"
+              izz="${(2/5) * 0.005 * (caster_wheel_radius * caster_wheel_radius)}" />
     </inertial>
   </link>
 
-  <joint name="joint_front_right_caster_wheel" type="fixed">
+  <joint name="joint_front_right_caster_wheel" type="continuous">
     <parent link="base_link"/>
     <child link="front_right_caster_wheel"/>
-    <origin rpy="-1.57 0 0" xyz="-0.32 -0.07 -0.06"/>
+    <origin rpy="-1.57 0 0" xyz="-0.32 -0.07 -0.0693"/>
+    <axis rpy="0 0 0" xyz="1 0 0"/>
   </joint> 
   
+  <xacro:imu_sensor/>
+  
+  <xacro:laser_sensor
+    update_rate="5"
+    ray_count="360"
+    min_angle="0"
+    max_angle="6.28"
+    min_range="0.12"
+    max_range="8.0"
+    topic_name="scan"
+    pos_x="0.27"
+    pos_y="0"
+    pos_z="0.188"
+  />
 
 </robot>

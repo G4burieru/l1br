@@ -1,11 +1,12 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>rocket</name>
+  <name>l1br</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
-  <maintainer email="renata_a@todo.todo">renata_a</maintainer>
-  <license>TODO: License declaration</license>
+  <description>l1br robot created in laser-ufpb</description>
+  <maintainer email="joao.gabriel.silva.santos@academico.ufpb.br">João Gabriel Santos</maintainer>
+  <maintainer email="renata.avelino@academico.ufpb.br">Renata Avelino</maintainer>
+  <license>Apache License 2.0</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 

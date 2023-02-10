@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<robot name="rocket" xmlns:xacro="http://ros.org/wiki/xacro">
+<robot name="l1br" xmlns:xacro="http://ros.org/wiki/xacro">
 
     <ros2_control name="GazeboSystem" type="system">
         <hardware>
@@ -27,7 +27,7 @@
 
     <gazebo>
         <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
-            <parameters>$(find rocket)/config/rocket_control.yaml</parameters>
+            <parameters>$(find l1br)/config/l1br_control.yaml</parameters>
         </plugin>
     </gazebo>
 

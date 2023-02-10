@@ -13,15 +13,15 @@ from ament_index_python.packages import get_package_prefix
 def generate_launch_description():
 
     pkg_gazebo_ros = get_package_share_directory('gazebo_ros')
-    pkg_rocket_gazebo = get_package_share_directory('rocket')
+    pkg_l1br_gazebo = get_package_share_directory('l1br')
 
     # We get the whole install dir
     # We do this to avoid having to copy or softlink manually the packages so that gazebo can find them
-    description_package_name = "rocket"
+    description_package_name = "l1br"
     install_dir = get_package_prefix(description_package_name)
 
     # Set the path to the WORLD model files. Is to find the models inside the models folder in my_robot_mode package
-    gazebo_models_path = os.path.join(pkg_rocket_gazebo, 'models')
+    gazebo_models_path = os.path.join(pkg_l1br_gazebo, 'models')
     # os.environ["GAZEBO_MODEL_PATH"] = gazebo_models_path
 
     if 'GAZEBO_MODEL_PATH' in os.environ:
@@ -51,7 +51,7 @@ def generate_launch_description():
         DeclareLaunchArgument(
             'world',
             default_value=[os.path.join(
-                pkg_rocket_gazebo, 'worlds', 'rocket_empty.world'), ''],
+                pkg_l1br_gazebo, 'worlds', 'l1br_empty.world'), ''],
             description='SDF world file'),
         gazebo
     ])

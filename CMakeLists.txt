@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(rocket)
+project(l1br)
 
 find_package(ament_cmake REQUIRED)
 

@@ -1,5 +1,3 @@
-"""Launch Gazebo with a world that has rocket, as well as the follow node."""
-
 import os
 
 from ament_index_python.packages import get_package_share_directory, get_package_share_path
@@ -15,10 +13,10 @@ from launch_ros.parameter_descriptions import ParameterValue
 def generate_launch_description():
 
     pkg_gazebo_ros = get_package_share_directory('gazebo_ros')
-    pkg_rocket_gazebo = get_package_share_path('rocket')
+    pkg_l1br_gazebo = get_package_share_path('l1br')
     
-    model_arg = DeclareLaunchArgument(name="model", default_value=str(pkg_rocket_gazebo / "urdf/rocket.urdf.xacro"))
-    rviz_arg = DeclareLaunchArgument(name="rvizconfig", default_value=str(pkg_rocket_gazebo / "config/rviz_config.rviz"))
+    model_arg = DeclareLaunchArgument(name="model", default_value=str(pkg_l1br_gazebo / "urdf/l1br.urdf.xacro"))
+    rviz_arg = DeclareLaunchArgument(name="rvizconfig", default_value=str(pkg_l1br_gazebo / "config/rviz_config.rviz"))
     gui_arg = DeclareLaunchArgument(name="gui", default_value="false", choices=["true", "false"], description="Flag to enable joint_state_publisher_gui")
 
     robot_description = ParameterValue(
@@ -49,9 +47,9 @@ def generate_launch_description():
     gazebo = Node(
         package="gazebo_ros" ,
         executable="spawn_entity.py" ,
-        name="spawn_rocket" ,
+        name="spawn_l1br" ,
         output="screen" ,
-        arguments= ["-topic", "/robot_description", "-entity", "rocket"] ,
+        arguments= ["-topic", "/robot_description", "-entity", "l1br"] ,
     )
     
     #Rviz launch
