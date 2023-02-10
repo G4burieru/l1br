@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- Define the shape of the robot's four caster wheels in meters -->
+    <xacro:property name="caster_wheel_radius" value="0.01"/>
+
+    <xacro:macro name="caster_wheel" params="prefix pos_X pos_Y pos_Z pos_r pos_p pos_y">
+        <joint name="joint_${prefix}" type="continuous">
+            <parent link="base_link" />
+            <child link="${prefix}" />
+            <origin rpy="${pos_r} ${pos_p} ${pos_y}" xyz="${pos_X} ${pos_Y} ${pos_Z}" />
+            <axis xyz="1 0 0" />
+        </joint>
+
+        <gazebo reference="${prefix}">
+            <selfCollide>false</selfCollide>
+            <mu1>0.09</mu1>
+            <mu2>0.09</mu2>
+            <kp>10000000.0</kp>
+            <kd>10000.0</kd>
+        </gazebo>
+
+        <link name="${prefix}">
+            <inertial>
+                <mass value="0.005" />
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <inertia ixx="${(2/5) * 0.005 * (caster_wheel_radius * caster_wheel_radius)}" ixy="0" ixz="0"
+                         iyy="${(2/5) * 0.005 * (caster_wheel_radius * caster_wheel_radius)}" iyz="0"
+                         izz="${(2/5) * 0.005 * (caster_wheel_radius * caster_wheel_radius)}" />
+            </inertial>
+
+            <collision name="${prefix}_collision">
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <geometry>
+                    <sphere radius="0.01"/>
+                </geometry>
+            </collision>
+
+            <visual name="${prefix}_visual">
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <geometry>
+                    <sphere radius="${caster_wheel_radius}"/>
+                </geometry>
+            </visual>
+        </link>
+    </xacro:macro>
+
+    <xacro:caster_wheel prefix="back_left_caster_wheel" pos_X="0.32" pos_Y="0.07" pos_Z="-0.0693" pos_r="-1.57" pos_p="0" pos_y="0" />
+    <xacro:caster_wheel prefix="back_right_caster_wheel" pos_X="0.32" pos_Y="-0.07" pos_Z="-0.0693" pos_r="-1.57" pos_p="0" pos_y="0" />
+    <xacro:caster_wheel prefix="front_left_caster_wheel" pos_X="-0.32" pos_Y="0.07" pos_Z="-0.0693" pos_r="-1.57" pos_p="0" pos_y="0" />
+    <xacro:caster_wheel prefix="front_right_caster_wheel" pos_X="-0.32" pos_Y="-0.07" pos_Z="-0.0693" pos_r="-1.57" pos_p="0" pos_y="0" />
+</robot>
