@@ -5,6 +5,7 @@
     <xacro:property name="base_width" value="0.47"/>
     <xacro:property name="base_length" value="0.77"/>
     <xacro:property name="base_height" value="0.13"/>
+    <xacro:property name="base_mass" value="2.4"/>
 
     <xacro:macro name="base" params="base_link">
         <link name="base_footprint">
@@ -41,7 +42,7 @@
 
         <inertial>
             <origin xyz="0  0  0.0" rpy="0 0 1.57"/>
-            <mass value="2.4"/>
+            <mass value="${base_mass}"/>
             <inertia ixx="0.12196" ixy="0.0" ixz="0.0"
                     iyy="0.04756" iyz="0.0"
                     izz="0.16276" />

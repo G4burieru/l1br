@@ -3,6 +3,7 @@
 
     <!-- Define the shape of the robot's four caster wheels in meters -->
     <xacro:property name="caster_wheel_radius" value="0.01"/>
+    <xacro:property name="caster_wheel_mass" value="0.005"/>
 
     <xacro:macro name="caster_wheel" params="prefix pos_X pos_Y pos_Z pos_r pos_p pos_y">
         <joint name="joint_${prefix}" type="continuous">
@@ -22,11 +23,11 @@
 
         <link name="${prefix}">
             <inertial>
-                <mass value="0.005" />
+                <mass value="${caster_wheel_mass}" />
                 <origin rpy="0 0 0" xyz="0 0 0" />
-                <inertia ixx="${(2/5) * 0.005 * (caster_wheel_radius * caster_wheel_radius)}" ixy="0" ixz="0"
-                         iyy="${(2/5) * 0.005 * (caster_wheel_radius * caster_wheel_radius)}" iyz="0"
-                         izz="${(2/5) * 0.005 * (caster_wheel_radius * caster_wheel_radius)}" />
+                <inertia ixx="${(2/5) * caster_wheel_mass * (caster_wheel_radius * caster_wheel_radius)}" ixy="0" ixz="0"
+                         iyy="${(2/5) * caster_wheel_mass * (caster_wheel_radius * caster_wheel_radius)}" iyz="0"
+                         izz="${(2/5) * caster_wheel_mass * (caster_wheel_radius * caster_wheel_radius)}" />
             </inertial>
 
             <collision name="${prefix}_collision">

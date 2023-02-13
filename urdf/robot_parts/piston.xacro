@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:property name="piston_width" value="0.1"/>
+    <xacro:property name="piston_radius" value="0.2"/>
+    <xacro:property name="piston_mass" value="0.2"/>
+
+    <xacro:macro name="piston">
+        <link name="piston">
+            <visual name="piston_visual">
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <cylinder length="${piston_width}" radius="${piston_radius}"/>
+                </geometry>
+            </visual>
+
+            <collision name="piston_collision">
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <cylinder length="${piston_width}" radius="${piston_radius}"/>
+                </geometry>
+            </collision>
+            
+            <inertial>
+                <mass value="${piston_mass}" />
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <inertia ixx="${(2/5) * piston_mass * (piston_radius * piston_radius)}" ixy="0.0" ixz="0.0"
+                        iyy="${(2/5) * piston_mass * (piston_radius * piston_radius)}" iyz="0.0"
+                        izz="${(2/5) * piston_mass * (piston_radius * piston_radius)}" />
+            </inertial>
+        </link>
+
+        <joint name="joint_piston" type="prismatic">
+                <parent link="base_link" />
+                <child link="piston" />
+                <origin rpy="0 0 0" xyz="0 0.015047 0" />
+                <axis xyz="0 0 1"/>
+                <limit effort="1000.0" lower="0" upper="0.3" velocity="0.5"/>
+        </joint>
+    </xacro:macro>
+</robot>

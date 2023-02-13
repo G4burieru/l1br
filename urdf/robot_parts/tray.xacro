@@ -24,16 +24,25 @@
         <inertial>
             <mass value="0.5" />
             <origin rpy="0 0 0" xyz="0 0 0" />
-            <inertia ixx="0.0" ixy="0.0" ixz="0.0"
-                    iyy="0.0" iyz="0.0"
-                    izz="0.0" />
+            <inertia ixx="${(2/5) * 0.5 * (tray_radius * tray_radius)}" ixy="0.0" ixz="0.0"
+                    iyy="${(2/5) * 0.5 * (tray_radius * tray_radius)}" iyz="0.0"
+                    izz="${(2/5) * 0.5 * (tray_radius * tray_radius)}" />
         </inertial>
         </link>
 
-        <joint name="joint_tray" type="fixed">
-                <parent link="base_link" />
+        <!-- <joint name="joint_prismatic_tray" type="prismatic"> -->
+                <!-- <parent link="base_link" /> -->
+                <!-- <child link="tray" /> -->
+                <!-- <origin rpy="0 0 0" xyz="0 0.015047 0" /> -->
+                <!-- <axis xyz="0 0 1"/> -->
+                <!-- <limit effort="1000.0" lower="0" upper="0.3" velocity="0.5"/> -->
+        <!-- </joint> -->
+
+        <joint name="joint_tray" type="continuous">
+                <parent link="piston" />
                 <child link="tray" />
-                <origin rpy="0 0 0" xyz="0 0.015047 0" />
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <axis xyz="0 0 1"/>
         </joint>
     </xacro:macro>
 </robot>
