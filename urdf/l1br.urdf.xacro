@@ -11,8 +11,9 @@
   <xacro:include filename="robot_parts/caster_wheel.xacro" />
   <xacro:include filename="robot_parts/robot_base.xacro" />
   <xacro:include filename="robot_parts/tray.xacro" />
-  <xacro:include filename="robot_parts/piston.xacro" />
   <xacro:tray/>
+  <xacro:include filename="robot_parts/piston.xacro" />
+  <xacro:piston/>
     
   <xacro:imu_sensor/>
 

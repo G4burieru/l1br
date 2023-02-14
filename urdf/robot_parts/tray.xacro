@@ -41,7 +41,7 @@
         <joint name="joint_tray" type="continuous">
                 <parent link="piston" />
                 <child link="tray" />
-                <origin rpy="0 0 0" xyz="0 0 0" />
+                <origin rpy="0 0 0" xyz="0 0 -0.06" />
                 <axis xyz="0 0 1"/>
         </joint>
     </xacro:macro>
