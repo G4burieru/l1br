@@ -3,6 +3,7 @@
 
     <!-- Define the shape of the robot's four caster wheels in meters -->
     <xacro:property name="caster_wheel_radius" value="0.01"/>
+    <xacro:property name="caster_wheel_radius_visual" value="0.001"/>
     <xacro:property name="caster_wheel_mass" value="0.005"/>
 
     <xacro:macro name="caster_wheel" params="prefix pos_X pos_Y pos_Z pos_r pos_p pos_y">
@@ -40,7 +41,7 @@
             <visual name="${prefix}_visual">
                 <origin rpy="0 0 0" xyz="0 0 0" />
                 <geometry>
-                    <sphere radius="${caster_wheel_radius}"/>
+                    <sphere radius="${caster_wheel_radius_visual}"/>
                 </geometry>
             </visual>
         </link>

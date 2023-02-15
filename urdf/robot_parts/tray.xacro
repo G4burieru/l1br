@@ -3,7 +3,7 @@
 
     <!-- Define the shape of the robot's tray in meters -->
     <xacro:property name="tray_radius" value="0.2"/>
-    <xacro:property name="tray_width" value="0.041"/>
+    <xacro:property name="tray_width" value="0.03"/>
 
     <xacro:macro name="tray">
         <link name="tray">
@@ -15,7 +15,7 @@
         </visual>
         
         <collision name="tray_collision">
-            <origin xyz="0 -0.015047 0.1" rpy="0 0 0"/>
+            <origin xyz="0 0 0.105" rpy="0 0 0"/>
             <geometry>
             <cylinder length="${tray_width}" radius="${tray_radius}"/>
             </geometry>
@@ -39,9 +39,9 @@
         <!-- </joint> -->
 
         <joint name="joint_tray" type="continuous">
-                <parent link="piston" />
+                <parent link="piston_base" />
                 <child link="tray" />
-                <origin rpy="0 0 0" xyz="0 0 -0.06" />
+                <origin rpy="0 0 0" xyz="0 0 -0.08" />
                 <axis xyz="0 0 1"/>
         </joint>
     </xacro:macro>
