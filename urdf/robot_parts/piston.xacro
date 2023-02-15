@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-    <xacro:property name="piston_cylinder_width" value="0.15"/>
+    <xacro:property name="piston_cylinder_width" value="0.19"/>
     <xacro:property name="piston_cylinder_radius" value="0.015"/>
     <xacro:property name="piston_cylinder_mass" value="0.2"/>
 
@@ -45,9 +45,9 @@
         <joint name="joint_piston_cylinder" type="prismatic">
                 <parent link="base_link" />
                 <child link="piston_cylinder" />
-                <origin rpy="0 0 0" xyz="0 0 0.02" />
+                <origin rpy="0 0 0" xyz="0 0 0.03" />
                 <axis xyz="0 0 1"/>
-                <limit effort="1000.0" lower="0" upper="0.12" velocity="0.5"/>
+                <limit effort="1000.0" lower="0" upper="0.13" velocity="0.5"/>
         </joint>
 
         <gazebo reference="piston_base">
@@ -85,7 +85,7 @@
         <joint name="joint_base_cylinder" type="fixed">
                 <parent link="piston_cylinder" />
                 <child link="piston_base" />
-                <origin rpy="0 0 0" xyz="0 0 0.08" />
+                <origin rpy="0 0 0" xyz="0 0 0.1" />
         </joint>
     </xacro:macro>
 </robot>
