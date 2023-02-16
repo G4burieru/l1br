@@ -3,6 +3,7 @@
 
     <!-- Define the shape of the robot's tray in meters -->
     <xacro:property name="tray_radius" value="0.2"/>
+    <!-- antigo raio era 0.2 -->
     <xacro:property name="tray_width" value="0.03"/>
 
     <xacro:macro name="tray">
@@ -29,6 +30,15 @@
                     izz="${(2/5) * 0.5 * (tray_radius * tray_radius)}" />
         </inertial>
         </link>
+
+        <gazebo reference="tray">
+            <selfCollide>true</selfCollide>
+            <mu1 value="1.5" />
+            <mu2 value="1.5" />
+            <kp value="10000000.0" />
+            <kd value="10000" />
+            <fdir1 value="0 0 0" />
+        </gazebo>
 
         <!-- <joint name="joint_prismatic_tray" type="prismatic"> -->
                 <!-- <parent link="base_link" /> -->

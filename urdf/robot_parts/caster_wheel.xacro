@@ -16,8 +16,8 @@
 
         <gazebo reference="${prefix}">
             <selfCollide>false</selfCollide>
-            <mu1>0.09</mu1>
-            <mu2>0.09</mu2>
+            <mu1>0.2</mu1>
+            <mu2>0.2</mu2>
             <kp>10000000.0</kp>
             <kd>10000.0</kd>
         </gazebo>
@@ -47,8 +47,8 @@
         </link>
     </xacro:macro>
 
-    <xacro:caster_wheel prefix="back_left_caster_wheel" pos_X="0.32" pos_Y="0.07" pos_Z="-0.0693" pos_r="-1.57" pos_p="0" pos_y="0" />
-    <xacro:caster_wheel prefix="back_right_caster_wheel" pos_X="0.32" pos_Y="-0.07" pos_Z="-0.0693" pos_r="-1.57" pos_p="0" pos_y="0" />
-    <xacro:caster_wheel prefix="front_left_caster_wheel" pos_X="-0.32" pos_Y="0.07" pos_Z="-0.0693" pos_r="-1.57" pos_p="0" pos_y="0" />
-    <xacro:caster_wheel prefix="front_right_caster_wheel" pos_X="-0.32" pos_Y="-0.07" pos_Z="-0.0693" pos_r="-1.57" pos_p="0" pos_y="0" />
+    <xacro:caster_wheel prefix="back_left_caster_wheel" pos_X="0.32" pos_Y="0.07" pos_Z="-0.092" pos_r="-1.57" pos_p="0" pos_y="0" />
+    <xacro:caster_wheel prefix="back_right_caster_wheel" pos_X="0.32" pos_Y="-0.07" pos_Z="-0.092" pos_r="-1.57" pos_p="0" pos_y="0" />
+    <xacro:caster_wheel prefix="front_left_caster_wheel" pos_X="-0.32" pos_Y="0.07" pos_Z="-0.092" pos_r="-1.57" pos_p="0" pos_y="0" />
+    <xacro:caster_wheel prefix="front_right_caster_wheel" pos_X="-0.32" pos_Y="-0.07" pos_Z="-0.092" pos_r="-1.57" pos_p="0" pos_y="0" />
 </robot>
