@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:property name="piston_cylinder_width" value="0.15"/>
+    <xacro:property name="piston_cylinder_radius" value="0.015"/>
+    <xacro:property name="piston_cylinder_mass" value="0.2"/>
+
+    <xacro:property name="piston_base_width" value="0.01"/>
+    <xacro:property name="piston_base_radius" value="0.08"/>
+    <xacro:property name="piston_base_mass" value="0.2"/>
+
+    <xacro:macro name="piston">
+        <gazebo reference="piston_cylinder">
+            <selfCollide>false</selfCollide>
+            <mu1>0.1</mu1>
+            <mu2>0.1</mu2>
+            <kp>10000000.0</kp>
+            <kd>10000.0</kd>
+        </gazebo>
+        
+        <link name="piston_cylinder">
+            <visual name="piston_cylinder_visual">
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <cylinder length="${piston_cylinder_width}" radius="${piston_cylinder_radius}"/>
+                </geometry>
+                <material name="grey">
+                    <color rgba="0.2 0.2 0.2 1.0"/>
+                </material>
+            </visual>
+
+            <!-- <collision name="piston_cylinder_collision"> -->
+                <!-- <origin xyz="0 0 0" rpy="0 0 0"/> -->
+                <!-- <geometry> -->
+                    <!-- <cylinder length="${piston_cylinder_width}" radius="${piston_cylinder_radius}"/> -->
+                <!-- </geometry> -->
+            <!-- </collision> -->
+            
+            <inertial>
+                <mass value="${piston_cylinder_mass}" />
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <inertia ixx="${(2/5) * piston_cylinder_mass * (piston_cylinder_radius * piston_cylinder_radius)}" ixy="0.0" ixz="0.0"
+                        iyy="${(2/5) * piston_cylinder_mass * (piston_cylinder_radius * piston_cylinder_radius)}" iyz="0.0"
+                        izz="${(2/5) * piston_cylinder_mass * (piston_cylinder_radius * piston_cylinder_radius)}" />
+            </inertial>
+        </link>
+
+        <joint name="joint_piston_cylinder" type="prismatic">
+                <parent link="base_link" />
+                <child link="piston_cylinder" />
+                <origin rpy="0 0 0" xyz="0 0 0.02" />
+                <axis xyz="0 0 1"/>
+                <limit effort="1000.0" lower="0" upper="0.12" velocity="0.3"/>
+        </joint>
+
+        <gazebo reference="piston_base">
+            <selfCollide>false</selfCollide>
+            <mu1>0.3</mu1>
+            <mu2>0.3</mu2>
+            <kp>10000000.0</kp>
+            <kd>10000.0</kd>
+        </gazebo>
+
+        <link name="piston_base">
+            <visual name="piston_base_visual">
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <cylinder length="${piston_base_width}" radius="${piston_base_radius}"/>
+                </geometry>
+                <material name="grey">
+                    <color rgba="0.2 0.2 0.2 1.0"/>
+                </material>
+            </visual>
+
+            <collision name="piston_base_collision">
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <cylinder length="${piston_base_width}" radius="${piston_base_radius}"/>
+                </geometry>
+            </collision>
+            
+            <inertial>
+                <mass value="${piston_base_mass}" />
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <inertia ixx="${(2/5) * piston_base_mass * (piston_base_radius * piston_base_radius)}" ixy="0.0" ixz="0.0"
+                        iyy="${(2/5) * piston_base_mass * (piston_base_radius * piston_base_radius)}" iyz="0.0"
+                        izz="${(2/5) * piston_base_mass * (piston_base_radius * piston_base_radius)}" />
+            </inertial>
+        </link>
+
+        <joint name="joint_base_cylinder" type="fixed">
+                <parent link="piston_cylinder" />
+                <child link="piston_base" />
+                <origin rpy="0 0 0" xyz="0 0 0.08" />
+        </joint>
+    </xacro:macro>
+</robot>
